@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Incident {
+  id             Int      @id @default(autoincrement())
+  title          String
+  description    String
+  priority       String
+  status         String   @default("Open")
+  reporter_name  String
+  latest_update  String?
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  updates        IncidentUpdate[]
+  ai_results     AIResult[]
+}
+
+model IncidentUpdate {
+  id            Int      @id @default(autoincrement())
+  incident_id   Int
+  message       String
+  author_name   String
+  created_at    DateTime @default(now())
+
+  incident      Incident @relation(fields: [incident_id], references: [id])
+}
+
+model AIResult {
+  id            Int      @id @default(autoincrement())
+  incident_id   Int
+  type          String
+  result_text   String
+  created_at    DateTime @default(now())
+
+  incident      Incident @relation(fields: [incident_id], references: [id])
+}
