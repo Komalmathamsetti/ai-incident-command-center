@@ -6,37 +6,17 @@ This application helps teams report, track, and manage live incidents collaborat
 
 ---
 
-# Features
+# Live Features
 
-## Real-Time Incident Management
-- Create incidents
-- Track live updates
-- Real-time synchronization using Socket.IO
-- Status workflow management
-
-## AI-Powered Assistance
-- Generate AI incident summaries
-- Get suggested next actions
-- AI responses powered by Groq API
-
-## Incident Dashboard
-- View all active incidents
-- Priority badges
-- Status badges
-- Latest update tracking
-- Created timestamps
-
-## Incident Workflow
-- Open
-- Investigating
-- Resolved
-
-Resolved incidents automatically disappear from the dashboard.
-
-## Database Integration
-- PostgreSQL database
-- Prisma ORM
-- Structured relational schema
+- Real-time incident updates
+- AI-generated incident summaries
+- Suggested next actions using AI
+- Incident status workflow
+- PostgreSQL database integration
+- Socket.IO realtime synchronization
+- Prisma ORM integration
+- Responsive modern UI
+- Dashboard auto-refresh without page reload
 
 ---
 
@@ -67,19 +47,241 @@ Resolved incidents automatically disappear from the dashboard.
 
 ---
 
-# Architecture
+# Project Structure
 
-## Realtime Flow
-
-User adds update
-→ Backend stores update in PostgreSQL
-→ Socket.IO emits realtime event
-→ All connected clients receive updates instantly
-→ Dashboard and incident pages refresh automatically
+```bash
+ai-incident-room/
+│
+├── client/
+│   ├── src/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── App.jsx
+│
+├── server/
+│   ├── prisma/
+│   ├── server.js
+│   └── .env
+```
 
 ---
 
-# Database Schema
+# Complete Setup Guide
+
+# 1. Clone Repository
+
+```bash
+git clone YOUR_GITHUB_REPOSITORY_URL
+```
+
+```bash
+cd ai-incident-room
+```
+
+---
+
+# 2. Frontend Setup
+
+Open terminal:
+
+```bash
+cd client
+```
+
+Install frontend dependencies:
+
+```bash
+npm install
+```
+
+Run frontend:
+
+```bash
+npm run dev
+```
+
+Frontend runs on:
+
+```bash
+http://localhost:5173
+```
+
+---
+
+# 3. Backend Setup
+
+Open another terminal:
+
+```bash
+cd server
+```
+
+Install backend dependencies:
+
+```bash
+npm install
+```
+
+---
+
+# 4. PostgreSQL Setup
+
+Open pgAdmin.
+
+Create database:
+
+```bash
+ai_incident_room
+```
+
+Default PostgreSQL details:
+
+```bash
+Username: postgres
+Port: 5432
+```
+
+---
+
+# 5. Configure Environment Variables
+
+Inside:
+
+```bash
+server/.env
+```
+
+Add:
+
+```env
+DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@localhost:5432/ai_incident_room"
+
+PORT=5000
+
+GROQ_API_KEY=YOUR_GROQ_API_KEY
+```
+
+Example:
+
+```env
+DATABASE_URL="postgresql://postgres:komal123@localhost:5432/ai_incident_room"
+
+PORT=5000
+
+GROQ_API_KEY=gsk_xxxxxxxxxxxxxxxxx
+```
+
+---
+
+# 6. Prisma Setup
+
+Initialize Prisma migration:
+
+```bash
+npx prisma migrate dev --name init
+```
+
+Generate Prisma client:
+
+```bash
+npx prisma generate
+```
+
+---
+
+# 7. Start Backend Server
+
+Inside server folder:
+
+```bash
+npm run dev
+```
+
+Backend runs on:
+
+```bash
+http://localhost:5000
+```
+
+---
+
+# 8. Test Backend API
+
+Open browser:
+
+```bash
+http://localhost:5000/incidents
+```
+
+Expected output:
+
+```json
+[]
+```
+
+---
+
+# 9. Realtime Architecture
+
+Realtime communication implemented using Socket.IO.
+
+Flow:
+
+```text
+User adds update
+→ Backend stores update in PostgreSQL
+→ Socket.IO emits realtime event
+→ Connected clients receive update instantly
+→ Dashboard refreshes automatically
+```
+
+---
+
+# 10. AI Integration
+
+This project uses:
+- Groq API
+- Llama 3.1 8B Instant model
+
+AI functionality:
+- Incident summarization
+- Suggested next actions
+
+To use AI feature:
+
+1. Create Groq account
+2. Generate API key
+3. Add key inside `.env`
+4. Restart backend server
+
+---
+
+# 11. Features Overview
+
+## Incident Dashboard
+- View active incidents
+- Priority badges
+- Status badges
+- Latest updates
+- Created timestamps
+
+## Incident Details
+- Add updates
+- View incident timeline
+- Change incident status
+- Generate AI summaries
+
+## Status Workflow
+Supported statuses:
+- Open
+- Investigating
+- Resolved
+
+Resolved incidents automatically disappear from dashboard.
+
+---
+
+# 12. Database Schema
 
 ## Incident
 - id
@@ -108,198 +310,7 @@ User adds update
 
 ---
 
-# Project Structure
-
-```bash
-ai-incident-room/
-│
-├── client/
-│   ├── src/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   └── App.jsx
-│
-├── server/
-│   ├── prisma/
-│   ├── server.js
-│   └── .env
-```
-
----
-
-# Setup Instructions
-
-## 1. Clone Repository
-
-```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-```
-
-```bash
-cd ai-incident-room
-```
-
----
-
-# Frontend Setup
-
-## 2. Install Frontend Dependencies
-
-```bash
-cd client
-npm install
-```
-
-## 3. Run Frontend
-
-```bash
-npm run dev
-```
-
-Frontend runs on:
-
-```bash
-http://localhost:5173
-```
-
----
-
-# Backend Setup
-
-## 4. Install Backend Dependencies
-
-```bash
-cd server
-npm install
-```
-
-## 5. Configure Environment Variables
-
-Create `.env` file inside server folder:
-
-```env
-DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@localhost:5432/ai_incident_room"
-
-PORT=5000
-
-GROQ_API_KEY=YOUR_GROQ_API_KEY
-```
-
----
-
-# PostgreSQL Setup
-
-## 6. Create Database
-
-Using pgAdmin:
-
-Create database:
-
-```bash
-ai_incident_room
-```
-
----
-
-# Prisma Setup
-
-## 7. Run Prisma Migration
-
-```bash
-npx prisma migrate dev --name init
-```
-
-## 8. Generate Prisma Client
-
-```bash
-npx prisma generate
-```
-
----
-
-# Run Backend
-
-## 9. Start Backend Server
-
-```bash
-npm run dev
-```
-
-Backend runs on:
-
-```bash
-http://localhost:5000
-```
-
----
-
-# AI Integration
-
-This project uses:
-- Groq API
-- Llama 3.1 8B Instant Model
-
-AI Features:
-- Incident summarization
-- Suggested next actions
-
----
-
-# Realtime Features
-
-Implemented using Socket.IO:
-
-- Realtime incident updates
-- Realtime dashboard synchronization
-- Realtime status updates
-- Realtime latest update tracking
-
----
-
-# Key Functionalities
-
-## Create Incident
-Users can create incidents with:
-- Title
-- Description
-- Priority
-- Reporter name
-
-## Add Updates
-Users can:
-- Post updates
-- Track investigation progress
-- Collaborate in realtime
-
-## AI Summary
-Users can:
-- Generate incident summaries
-- Receive suggested next actions
-
-## Status Workflow
-Supported statuses:
-- Open
-- Investigating
-- Resolved
-
-Resolved incidents are automatically hidden from dashboard.
-
----
-
-# Future Improvements
-
-- User authentication
-- Role-based access
-- Incident filtering
-- Search functionality
-- Email notifications
-- Analytics dashboard
-- File attachments
-- Dark mode
-
----
-
-# Deployment
+# 13. Deployment
 
 ## Frontend Deployment
 - Vercel
@@ -312,13 +323,15 @@ Resolved incidents are automatically hidden from dashboard.
 
 ---
 
-# Screenshots
+# 14. Future Improvements
 
-Add screenshots of:
-- Dashboard
-- Incident Details Page
-- AI Summary Feature
-- Realtime Updates
+- User authentication
+- Role-based access
+- Search and filtering
+- File uploads
+- Notifications
+- Analytics dashboard
+- Dark mode
 
 ---
 
