@@ -2,21 +2,39 @@
 
 A real-time AI-powered incident management platform built using React, Express, PostgreSQL, Prisma, Socket.IO, and Groq AI.
 
-This application helps teams report, track, and manage live incidents collaboratively while receiving AI-generated incident summaries and suggested next actions.
+This application enables teams to create incidents, collaborate through live updates, track status changes, and generate AI-powered summaries with suggested next actions.
 
 ---
 
-# Live Features
+## Features
 
-- Real-time incident updates
-- AI-generated incident summaries
-- Suggested next actions using AI
-- Incident status workflow
-- PostgreSQL database integration
-- Socket.IO realtime synchronization
-- Prisma ORM integration
-- Responsive modern UI
-- Dashboard auto-refresh without page reload
+### Incident Dashboard
+- View all active incidents
+- Priority and status indicators
+- Latest update preview
+- Created timestamps
+- Resolved incidents automatically disappear
+
+### Incident Management
+- Create incidents
+- Track incident details
+- Add live updates
+- Change incident status
+
+### Real-Time Updates
+- Socket.IO-based realtime communication
+- Dashboard updates automatically
+- Incident updates appear without refresh
+
+### AI Features
+- Generate AI incident summaries
+- Suggested next actions
+- Powered by Groq + Llama 3.1
+
+### Status Workflow
+- Open
+- Investigating
+- Resolved
 
 ---
 
@@ -39,11 +57,36 @@ This application helps teams report, track, and manage live incidents collaborat
 
 ## Database
 - PostgreSQL
+- Neon
 - pgAdmin
 
-## AI Integration
-- Groq API
-- Llama 3.1 Model
+## Deployment
+- Vercel
+- Render
+
+---
+# Live Links
+
+- Frontend: https://ai-incident-command-center.vercel.app/
+- Backend API: https://ai-incident-command-center.onrender.com
+
+# Architecture
+
+```text
+Frontend (React)
+↓
+
+Backend (Express + Socket.IO)
+↓
+
+Prisma ORM
+↓
+
+PostgreSQL (Neon)
+↓
+
+AI Summary (Groq API)
+```
 
 ---
 
@@ -51,7 +94,7 @@ This application helps teams report, track, and manage live incidents collaborat
 
 ```bash
 ai-incident-room/
-│
+
 ├── client/
 │   ├── src/
 │   │   ├── pages/
@@ -62,17 +105,21 @@ ai-incident-room/
 │   ├── prisma/
 │   ├── server.js
 │   └── .env
+│
+└── README.md
 ```
 
 ---
 
-# Complete Setup Guide
+# Setup Instructions
 
-# 1. Clone Repository
+## 1. Clone Repository
 
 ```bash
 git clone YOUR_GITHUB_REPOSITORY_URL
 ```
+
+Move into project:
 
 ```bash
 cd ai-incident-room
@@ -80,7 +127,7 @@ cd ai-incident-room
 
 ---
 
-# 2. Frontend Setup
+## 2. Frontend Setup
 
 Open terminal:
 
@@ -88,7 +135,7 @@ Open terminal:
 cd client
 ```
 
-Install frontend dependencies:
+Install dependencies:
 
 ```bash
 npm install
@@ -100,15 +147,15 @@ Run frontend:
 npm run dev
 ```
 
-Frontend runs on:
+Frontend runs at:
 
 ```bash
-http://localhost:5173
+https://ai-incident-command-center.vercel.app/
 ```
 
 ---
 
-# 3. Backend Setup
+## 3. Backend Setup
 
 Open another terminal:
 
@@ -116,7 +163,7 @@ Open another terminal:
 cd server
 ```
 
-Install backend dependencies:
+Install dependencies:
 
 ```bash
 npm install
@@ -124,9 +171,7 @@ npm install
 
 ---
 
-# 4. PostgreSQL Setup
-
-Open pgAdmin.
+## 4. PostgreSQL Setup
 
 Create database:
 
@@ -134,18 +179,18 @@ Create database:
 ai_incident_room
 ```
 
-Default PostgreSQL details:
+Open:
 
-```bash
-Username: postgres
-Port: 5432
+```text
+pgAdmin
+→ Create Database
 ```
 
 ---
 
-# 5. Configure Environment Variables
+## 5. Configure Environment Variables
 
-Inside:
+Create:
 
 ```bash
 server/.env
@@ -154,34 +199,24 @@ server/.env
 Add:
 
 ```env
-DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@localhost:5432/ai_incident_room"
+DATABASE_URL="postgresql://neondb_owner:npg_KvV3GsPMH1tw@ep-twilight-brook-aqe75goq-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 
 PORT=5000
 
-GROQ_API_KEY=YOUR_GROQ_API_KEY
-```
-
-Example:
-
-```env
-DATABASE_URL="postgresql://postgres:komal123@localhost:5432/ai_incident_room"
-
-PORT=5000
-
-GROQ_API_KEY=gsk_xxxxxxxxxxxxxxxxx
+GROQ_API_KEY=your_groq_api_key
 ```
 
 ---
 
-# 6. Prisma Setup
+## 6. Prisma Setup
 
-Initialize Prisma migration:
+Apply migrations:
 
 ```bash
 npx prisma migrate dev --name init
 ```
 
-Generate Prisma client:
+Generate client:
 
 ```bash
 npx prisma generate
@@ -189,147 +224,127 @@ npx prisma generate
 
 ---
 
-# 7. Start Backend Server
-
-Inside server folder:
+## 7. Start Backend
 
 ```bash
 npm run dev
 ```
 
-Backend runs on:
+Backend runs at:
 
 ```bash
-http://localhost:5000
+https://ai-incident-command-center.onrender.com
 ```
 
 ---
 
-# 8. Test Backend API
-
-Open browser:
-
-```bash
-http://localhost:5000/incidents
-```
-
-Expected output:
-
-```json
-[]
-```
-
----
-
-# 9. Realtime Architecture
-
-Realtime communication implemented using Socket.IO.
-
-Flow:
-
-```text
-User adds update
-→ Backend stores update in PostgreSQL
-→ Socket.IO emits realtime event
-→ Connected clients receive update instantly
-→ Dashboard refreshes automatically
-```
-
----
-
-# 10. AI Integration
+# AI Integration
 
 This project uses:
-- Groq API
-- Llama 3.1 8B Instant model
 
-AI functionality:
+- Groq API
+- Llama 3.1 8B Instant Model
+
+AI capabilities:
+
 - Incident summarization
 - Suggested next actions
 
-To use AI feature:
+---
 
-1. Create Groq account
-2. Generate API key
-3. Add key inside `.env`
-4. Restart backend server
+# Realtime Flow
+
+```text
+User creates update
+↓
+
+Backend stores in PostgreSQL
+↓
+
+Socket.IO emits event
+↓
+
+Clients receive update
+↓
+
+Dashboard refreshes automatically
+```
 
 ---
 
-# 11. Features Overview
-
-## Incident Dashboard
-- View active incidents
-- Priority badges
-- Status badges
-- Latest updates
-- Created timestamps
-
-## Incident Details
-- Add updates
-- View incident timeline
-- Change incident status
-- Generate AI summaries
-
-## Status Workflow
-Supported statuses:
-- Open
-- Investigating
-- Resolved
-
-Resolved incidents automatically disappear from dashboard.
-
----
-
-# 12. Database Schema
+# Database Schema
 
 ## Incident
-- id
-- title
-- description
-- priority
-- status
-- reporter_name
-- latest_update
-- created_at
-- updated_at
+
+```text
+id
+title
+description
+priority
+status
+reporter_name
+latest_update
+created_at
+updated_at
+```
 
 ## IncidentUpdate
-- id
-- incident_id
-- message
-- author_name
-- created_at
+
+```text
+id
+incident_id
+message
+author_name
+created_at
+```
 
 ## AIResult
-- id
-- incident_id
-- type
-- result_text
-- created_at
+
+```text
+id
+incident_id
+type
+result_text
+created_at
+```
 
 ---
 
-# 13. Deployment
+# Deployment
 
-## Frontend Deployment
-- Vercel
+## Backend
 
-## Backend Deployment
+Deploy using:
+
 - Render
 
-## Database Hosting
-- Neon PostgreSQL
+Environment Variables:
+
+```env
+DATABASE_URL=
+PORT=
+GROQ_API_KEY=
+```
 
 ---
 
-# 14. Future Improvements
+## Frontend
 
-- User authentication
+Deploy using:
+
+- Vercel
+
+Update API URL before deployment.
+
+---
+
+# Future Improvements
+
+- Authentication
 - Role-based access
-- Search and filtering
-- File uploads
+- Search and filters
 - Notifications
+- File uploads
 - Analytics dashboard
 - Dark mode
 
@@ -343,5 +358,4 @@ Komal Mathamsetti
 
 # License
 
-This project is developed for internship evaluation and learning purposes.
-
+Developed for internship evaluation and learning purposes.
