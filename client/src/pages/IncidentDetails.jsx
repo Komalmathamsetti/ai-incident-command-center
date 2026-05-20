@@ -10,7 +10,7 @@ import api from "../services/api";
 
 import { useParams } from "react-router-dom";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://ai-incident-command-center.onrender.com/");
 
 function IncidentDetails() {
   const { id } = useParams();
